@@ -108,8 +108,7 @@ export default function Footer() {
         <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
           <p>© {new Date().getFullYear()} RE/MAX ELITE Sri Lanka. Each office is independently owned and operated. Licensed Real Estate Agency in Colombo.</p>
           <div className="flex items-center gap-6">
-            <span className="text-red-400 font-semibold">RE/MAX Red & Blue Theme</span>
-            <span>Schema.org JSON-LD Verified</span>
+            <span className="text-red-400 font-bold">RE/MAX Elite</span>
           </div>
         </div>
       </div>

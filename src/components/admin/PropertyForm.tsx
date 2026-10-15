@@ -124,7 +124,7 @@ export default function PropertyForm({
       }
     } catch (err: unknown) {
       console.error("Upload error:", err);
-      const msg = err instanceof Error ? err.message : "Failed to upload image to Vercel Blob";
+      const msg = err instanceof Error ? err.message : "Failed to upload photo. Please try again.";
       setErrorMsg(msg);
     } finally {
       setIsUploading(false);
@@ -641,15 +641,15 @@ export default function PropertyForm({
         </div>
       </div>
 
-      {/* Image Upload Pipeline Section */}
+      {/* Property Photos Section */}
       <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-sm font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
-              <ImageIcon className="w-4 h-4 text-red-600" /> Image Upload Pipeline (Vercel Blob Storage)
+              <ImageIcon className="w-4 h-4 text-red-600" /> Property Photos & Gallery
             </h2>
             <p className="text-xs text-slate-500">
-              Upload local photos directly to Vercel Blob edge storage or add image URLs.
+              Upload photos of your property from your device, or add image links.
             </p>
           </div>
           <span className="text-xs font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded border border-red-200">
@@ -661,14 +661,14 @@ export default function PropertyForm({
         <div className="border-2 border-dashed border-slate-300 rounded-xl p-6 text-center hover:border-red-500 transition-colors bg-slate-50/50">
           <UploadCloud className="w-10 h-10 text-slate-400 mx-auto mb-2" />
           <p className="text-xs font-bold text-slate-700">
-            Click to upload files directly to Vercel Blob
+            Click or tap to upload property photos
           </p>
           <p className="text-[11px] text-slate-400 mt-0.5 mb-3">
-            Supports PNG, JPG, WebP, AVIF up to 30MB
+            Supports high-resolution JPG, PNG, and WebP photos
           </p>
 
           <label className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold cursor-pointer transition-all shadow-sm">
-            <span>Browse Files</span>
+            <span>Browse Photos</span>
             <input
               type="file"
               multiple
@@ -682,7 +682,7 @@ export default function PropertyForm({
           {uploadProgress !== null && (
             <div className="mt-4 max-w-xs mx-auto">
               <div className="flex justify-between text-[11px] text-slate-600 mb-1">
-                <span>Uploading directly to Vercel Blob...</span>
+                <span>Uploading photos...</span>
                 <span>{uploadProgress}%</span>
               </div>
               <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
@@ -699,7 +699,7 @@ export default function PropertyForm({
         <div className="flex gap-2 pt-2">
           <input
             type="url"
-            placeholder="Or enter direct image URL (https://images.unsplash.com/...)"
+            placeholder="Or paste an image web link (https://...)"
             value={manualImageUrl}
             onChange={(e) => setManualImageUrl(e.target.value)}
             className="flex-1 px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-600"

@@ -35,14 +35,14 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo with actual RE/MAX ELITE branding */}
           <Link href="/" className="flex items-center gap-2 shrink-0 group">
-            <div className="relative h-8 w-28 sm:w-32 flex items-center">
+            <div className="relative h-10 w-28 sm:w-32 flex items-center">
               <Image
                 src="/logo.png"
                 alt="RE/MAX ELITE"
-                width={120}
-                height={36}
+                width={140}
+                height={70}
                 priority
-                className="h-8 w-auto object-contain transition-transform group-hover:scale-105"
+                className="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105"
               />
             </div>
           </Link>
@@ -133,52 +133,10 @@ export default function Navbar() {
                 <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-8 h-[2.5px] bg-red-600 rounded-full" />
               )}
             </Link>
-
-            {/* Admin */}
-            <Link
-              href="/admin"
-              className={`text-sm font-semibold transition-colors hover:text-red-600 flex items-center gap-1.5 relative ${
-                pathname.startsWith("/admin")
-                  ? "text-red-600 font-bold"
-                  : "text-slate-700"
-              }`}
-            >
-              <Settings className="w-4 h-4 text-slate-600" />
-              <span>Admin</span>
-              {pathname.startsWith("/admin") && (
-                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-8 h-[2.5px] bg-red-600 rounded-full" />
-              )}
-            </Link>
           </nav>
 
-          {/* Desktop CTA / Auth info */}
-          <div className="hidden lg:flex items-center gap-3 xl:gap-4">
-            {/* User Pill */}
-            <div className="flex items-center gap-2 bg-[#F1F5F9]/80 hover:bg-slate-100 rounded-full py-1.5 px-3.5 border border-slate-200/80 shadow-xs transition-colors">
-              <User className="w-4 h-4 text-slate-600 shrink-0" />
-              <span className="text-xs font-semibold text-slate-700 truncate max-w-[160px]">
-                {user ? user.email : "admin@realestate.com"}
-              </span>
-              <span className="w-px h-3.5 bg-slate-300 shrink-0"></span>
-              {user ? (
-                <button
-                  onClick={() => logout()}
-                  title="Sign out"
-                  className="text-slate-500 hover:text-red-600 transition-colors"
-                >
-                  <LogOut className="w-3.5 h-3.5" />
-                </button>
-              ) : (
-                <Link
-                  href="/admin"
-                  title="Admin login"
-                  className="text-slate-500 hover:text-red-600 transition-colors"
-                >
-                  <LogOut className="w-3.5 h-3.5 rotate-180" />
-                </Link>
-              )}
-            </div>
-
+          {/* Desktop CTA */}
+          <div className="hidden lg:flex items-center">
             {/* Post Listing Pill Button */}
             <Link
               href="/admin/new"
@@ -272,14 +230,6 @@ export default function Navbar() {
             >
               <Mail className="w-5 h-5 text-slate-600" />
               <span>Contact</span>
-            </Link>
-            <Link
-              href="/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-semibold"
-            >
-              <Settings className="w-5 h-5 text-slate-600" />
-              <span>Admin</span>
             </Link>
             <div className="pt-2">
               <Link
