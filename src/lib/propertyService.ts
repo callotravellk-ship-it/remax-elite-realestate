@@ -18,8 +18,8 @@ import { initialProperties } from "@/data/mockProperties";
 const COLLECTION_NAME = "properties";
 const LOCAL_STORAGE_KEY = "estate_properties_custom";
 
-// Helper to prevent Firebase SDK from hanging indefinitely when Firestore is not enabled
-function withTimeout<T>(promise: Promise<T>, ms: number = 2000): Promise<T> {
+// Helper to prevent Firebase SDK from hanging indefinitely
+function withTimeout<T>(promise: Promise<T>, ms: number = 4000): Promise<T> {
   return Promise.race([
     promise,
     new Promise<T>((_, reject) =>
@@ -59,7 +59,7 @@ export async function getProperties(): Promise<Property[]> {
   if (isFirebaseConfigured && db) {
     try {
       const q = query(collection(db, COLLECTION_NAME), orderBy("createdAt", "desc"));
-      const snapshot = await withTimeout(getDocs(q), 2000);
+      const snapshot = await withTimeout(getDocs(q), 4000);
       if (!snapshot.empty) {
         return snapshot.docs.map((docSnap) => ({
           id: docSnap.id,
@@ -81,7 +81,7 @@ export async function getPropertyById(id: string): Promise<Property | null> {
   if (isFirebaseConfigured && db) {
     try {
       const docRef = doc(db, COLLECTION_NAME, id);
-      const snapshot = await withTimeout(getDoc(docRef), 2000);
+      const snapshot = await withTimeout(getDoc(docRef), 4000);
       if (snapshot.exists()) {
         return { id: snapshot.id, ...snapshot.data() } as Property;
       }
