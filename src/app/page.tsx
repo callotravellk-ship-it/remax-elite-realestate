@@ -8,6 +8,7 @@ import PropertyCard from "@/components/PropertyCard";
 import SearchFilterBar from "@/components/SearchFilterBar";
 import { Property, PropertyFilterState, ListingType } from "@/types/property";
 import { getProperties } from "@/lib/propertyService";
+import { initialProperties } from "@/data/mockProperties";
 import {
   Scale,
   Sparkles,
@@ -56,9 +57,9 @@ function UrlTypeWatcher({
 }
 
 export default function HomePage() {
-  const [properties, setProperties] = useState<Property[]>([]);
+  const [properties, setProperties] = useState<Property[]>(initialProperties);
   const [filters, setFilters] = useState<PropertyFilterState>(initialFilters);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadData() {
