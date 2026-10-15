@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 52" width="170" height="52" fill="none">
+  <g id="remax-elite-logo">
+    <!-- RE -->
+    <text x="4" y="32" font-family="system-ui, -apple-system, 'Arial Black', Impact, sans-serif" font-weight="900" font-size="32" fill="#E11B22" letter-spacing="-0.5">RE</text>
+    <!-- Blue Slash -->
+    <polygon points="56,33 67,8 74,8 63,33" fill="#003DA5" />
+    <!-- MAX -->
+    <text x="73" y="32" font-family="system-ui, -apple-system, 'Arial Black', Impact, sans-serif" font-weight="900" font-size="32" fill="#E11B22" letter-spacing="-0.5">MAX</text>
+    <!-- Registered Mark -->
+    <text x="156" y="16" font-family="system-ui, -apple-system, Arial, sans-serif" font-weight="bold" font-size="9" fill="#E11B22">®</text>
+    <!-- ELITE -->
+    <text x="20" y="48" font-family="system-ui, -apple-system, Arial, sans-serif" font-weight="900" font-size="12" fill="#003DA5" letter-spacing="8">ELITE</text>
+  </g>
+</svg>
