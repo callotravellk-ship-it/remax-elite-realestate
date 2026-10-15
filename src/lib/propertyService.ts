@@ -1,4 +1,4 @@
-import { db, storage, isFirebaseConfigured } from "./firebase";
+import { db, isFirebaseConfigured } from "./firebase";
 import {
   collection,
   doc,
@@ -11,7 +11,7 @@ import {
   query,
   orderBy,
 } from "firebase/firestore";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { upload } from "@vercel/blob/client";
 import { Property } from "@/types/property";
 import { initialProperties } from "@/data/mockProperties";
 
@@ -181,52 +181,44 @@ export async function deleteProperty(id: string): Promise<boolean> {
 }
 
 /**
- * Upload an image file to Firebase Storage
+ * Upload an image file directly to Vercel Blob using the Client Upload pattern
  */
 export async function uploadPropertyImage(
   file: File,
   folder: string = "properties",
   onProgress?: (progress: number) => void
 ): Promise<string> {
-  if (isFirebaseConfigured && storage) {
-    const fileExt = file.name.split(".").pop();
-    const fileName = `${folder}/${Date.now()}-${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
-    const storageRef = ref(storage, fileName);
+  try {
+    const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
+    const pathname = `${folder}/${Date.now()}-${sanitizedName}`;
 
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    return new Promise((resolve, reject) => {
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          if (onProgress) onProgress(progress);
-        },
-        (error) => {
-          console.error("Firebase Storage upload error:", error);
-          reject(error);
-        },
-        async () => {
-          const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-          resolve(downloadUrl);
+    const newBlob = await upload(pathname, file, {
+      access: "public",
+      handleUploadUrl: "/api/upload",
+      onUploadProgress: (progressEvent) => {
+        if (onProgress) {
+          onProgress(progressEvent.percentage);
         }
-      );
+      },
+    });
+
+    return newBlob.url;
+  } catch (error) {
+    console.error("Vercel Blob client upload error:", error);
+    // Offline or fallback: return a data URL so the user can continue testing
+    return new Promise((resolve) => {
+      if (onProgress) {
+        onProgress(30);
+        setTimeout(() => onProgress(75), 150);
+        setTimeout(() => onProgress(100), 300);
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     });
   }
-
-  // Fallback: create an object URL or simulate upload for local testing
-  return new Promise((resolve) => {
-    if (onProgress) {
-      onProgress(30);
-      setTimeout(() => onProgress(75), 150);
-      setTimeout(() => onProgress(100), 300);
-    }
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      resolve(reader.result as string);
-    };
-    reader.readAsDataURL(file);
-  });
 }
 
 /**

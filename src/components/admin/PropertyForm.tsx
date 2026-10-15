@@ -101,7 +101,7 @@ export default function PropertyForm({
     }
   };
 
-  // Image upload handler pushing file to Firebase Storage
+  // Image upload handler pushing file directly to Vercel Blob via Client Upload
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -124,7 +124,7 @@ export default function PropertyForm({
       }
     } catch (err: unknown) {
       console.error("Upload error:", err);
-      const msg = err instanceof Error ? err.message : "Failed to upload image to Firebase Storage";
+      const msg = err instanceof Error ? err.message : "Failed to upload image to Vercel Blob";
       setErrorMsg(msg);
     } finally {
       setIsUploading(false);
@@ -646,10 +646,10 @@ export default function PropertyForm({
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-sm font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
-              <ImageIcon className="w-4 h-4 text-red-600" /> Image Upload Pipeline (Firebase Storage)
+              <ImageIcon className="w-4 h-4 text-red-600" /> Image Upload Pipeline (Vercel Blob Storage)
             </h2>
             <p className="text-xs text-slate-500">
-              Upload local photos directly to Firebase Storage or add image URLs.
+              Upload local photos directly to Vercel Blob edge storage or add image URLs.
             </p>
           </div>
           <span className="text-xs font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded border border-red-200">
@@ -661,10 +661,10 @@ export default function PropertyForm({
         <div className="border-2 border-dashed border-slate-300 rounded-xl p-6 text-center hover:border-red-500 transition-colors bg-slate-50/50">
           <UploadCloud className="w-10 h-10 text-slate-400 mx-auto mb-2" />
           <p className="text-xs font-bold text-slate-700">
-            Click to upload files to Firebase Storage
+            Click to upload files directly to Vercel Blob
           </p>
           <p className="text-[11px] text-slate-400 mt-0.5 mb-3">
-            Supports PNG, JPG, WebP up to 10MB
+            Supports PNG, JPG, WebP, AVIF up to 30MB
           </p>
 
           <label className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold cursor-pointer transition-all shadow-sm">
@@ -682,7 +682,7 @@ export default function PropertyForm({
           {uploadProgress !== null && (
             <div className="mt-4 max-w-xs mx-auto">
               <div className="flex justify-between text-[11px] text-slate-600 mb-1">
-                <span>Uploading to Cloud Storage...</span>
+                <span>Uploading directly to Vercel Blob...</span>
                 <span>{uploadProgress}%</span>
               </div>
               <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
