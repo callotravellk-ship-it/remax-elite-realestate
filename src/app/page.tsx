@@ -210,12 +210,11 @@ export default function HomePage() {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.12] text-white">
-              Real Estate in Sri Lanka.{" "}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.15] text-white">
+              Trusted Real Estate Agent in{" "}
+              <span className="text-sky-300">Sri Lanka</span> for{" "}
               <br className="hidden sm:inline" />
-              <span className="text-[#FF5A5F]">Property</span> for Sale & Rent in{" "}
-              <br className="hidden sm:inline" />
-              <span className="text-sky-300">Colombo</span>
+              <span className="text-[#FF5A5F]">Buying, Selling & Renting</span> Property
             </h1>
 
             {/* Subtitle */}
