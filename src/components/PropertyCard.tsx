@@ -21,11 +21,13 @@ import {
 
 interface PropertyCardProps {
   property: Property;
+  priority?: boolean;
 }
 
-export default function PropertyCard({ property }: PropertyCardProps) {
+export default function PropertyCard({ property, priority = false }: PropertyCardProps) {
   const { isInCompare, toggleCompare, maxProperties, selectedProperties } = useComparison();
   const [imgError, setImgError] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
 
   const inCompare = isInCompare(property.id);
@@ -47,23 +49,35 @@ export default function PropertyCard({ property }: PropertyCardProps) {
   const pricePerSqft = property.pricePerSqft || Math.round(property.price / property.squareFeet);
   const heroImage =
     imgError || !property.images?.[0]
-      ? "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
+      ? "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=75"
       : property.images[0];
 
   return (
     <div className="group relative flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
       {/* Image Container */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-200">
         <Link href={`/properties/${property.id}`} className="block w-full h-full">
+          {/* Shimmer skeleton until image loads */}
+          {!isLoaded && !imgError && (
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 animate-pulse" />
+          )}
           <Image
             src={heroImage}
             alt={property.title}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-            onError={() => setImgError(true)}
+            priority={priority}
+            loading={priority ? "eager" : "lazy"}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 384px"
+            className={`object-cover transition-all duration-500 group-hover:scale-105 ${
+              isLoaded ? "opacity-100 blur-0" : "opacity-0 blur-xs"
+            }`}
+            onLoad={() => setIsLoaded(true)}
+            onError={() => {
+              setImgError(true);
+              setIsLoaded(true);
+            }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20 pointer-events-none" />
         </Link>
 
         {/* Listing Type & Status Badges */}

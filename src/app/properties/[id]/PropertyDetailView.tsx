@@ -54,7 +54,7 @@ export default function PropertyDetailView({
     property.pricePerSqft || Math.round(property.price / property.squareFeet);
 
   const images = property.images && property.images.length > 0 ? property.images : [
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80",
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=75",
   ];
 
   const handleContactSubmit = (e: React.FormEvent) => {

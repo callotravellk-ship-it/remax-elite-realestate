@@ -9,6 +9,7 @@ import {
   updateProperty,
   uploadPropertyImage,
 } from "@/lib/propertyService";
+import { compressImage } from "@/lib/imageCompressor";
 import {
   UploadCloud,
   X,
@@ -75,7 +76,7 @@ export default function PropertyForm({
   // Images
   const [images, setImages] = useState<string[]>(
     initialData?.images || [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1080&q=75",
     ]
   );
   const [manualImageUrl, setManualImageUrl] = useState("");
@@ -101,7 +102,7 @@ export default function PropertyForm({
     }
   };
 
-  // Image upload handler pushing file directly to Vercel Blob via Client Upload
+  // Image upload handler pushing file directly to Vercel Blob via Client Upload with automatic client-side compression
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -113,8 +114,15 @@ export default function PropertyForm({
     try {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
+        // Automatically compress/downscale large phone/camera images before upload
+        const optimizedFile = await compressImage(file, {
+          maxWidth: 1920,
+          maxHeight: 1440,
+          quality: 0.82,
+        });
+
         const downloadUrl = await uploadPropertyImage(
-          file,
+          optimizedFile,
           "properties",
           (progress) => {
             setUploadProgress(Math.round(progress));

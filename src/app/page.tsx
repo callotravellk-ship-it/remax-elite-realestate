@@ -349,8 +349,12 @@ export default function HomePage() {
         ) : filteredProperties.length > 0 ? (
           /* Property Cards Grid */
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProperties.map((property) => (
-              <PropertyCard key={property.id} property={property} />
+            {filteredProperties.map((property, idx) => (
+              <PropertyCard
+                key={property.id}
+                property={property}
+                priority={idx < 3}
+              />
             ))}
           </div>
         ) : (
