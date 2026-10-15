@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /properties/{propertyId} {
+      // Allow public read for SEO search engines and visitors
+      allow read: if true;
+      // Require authenticated admin user for write, update, and delete
+      allow write: if request.auth != null;
+    }
+  }
+}

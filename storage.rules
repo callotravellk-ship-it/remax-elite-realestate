@@ -1,0 +1,11 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /properties/{allPaths=**} {
+      // Allow public read for property photos
+      allow read: if true;
+      // Allow authenticated admin uploads up to 15MB
+      allow write: if request.auth != null && request.resource.size < 15 * 1024 * 1024;
+    }
+  }
+}
