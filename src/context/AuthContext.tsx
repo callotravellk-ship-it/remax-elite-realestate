@@ -69,6 +69,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, pass: string): Promise<{ success: boolean; error?: string }> => {
     setLoading(true);
+
+    // If using the local demo/fallback credentials, allow instant access
+    if (email.trim().toLowerCase() === "admin@realestate.com" && pass === "admin123456") {
+      const demoUser: AdminUser = {
+        uid: "demo-admin-uid-1",
+        email: "admin@realestate.com",
+        displayName: "Executive Admin",
+        isDemo: true,
+      };
+      localStorage.setItem(DEMO_STORAGE_KEY, JSON.stringify(demoUser));
+      setUser(demoUser);
+      setLoading(false);
+      return { success: true };
+    }
+
     if (isFirebaseConfigured && auth) {
       try {
         const cred = await signInWithEmailAndPassword(auth, email, pass);
@@ -81,23 +96,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { success: true };
       } catch (err: unknown) {
         setLoading(false);
-        const errorMsg = err instanceof Error ? err.message : "Failed to sign in with Firebase";
-        return { success: false, error: errorMsg };
-      }
-    }
+        const rawMsg = err instanceof Error ? err.message : "Failed to sign in with Firebase";
 
-    // Demo authentication fallback
-    if (email === "admin@realestate.com" && pass === "admin123456") {
-      const demoUser: AdminUser = {
-        uid: "demo-admin-uid-1",
-        email: "admin@realestate.com",
-        displayName: "Executive Admin",
-        isDemo: true,
-      };
-      localStorage.setItem(DEMO_STORAGE_KEY, JSON.stringify(demoUser));
-      setUser(demoUser);
-      setLoading(false);
-      return { success: true };
+        if (rawMsg.includes("auth/configuration-not-found")) {
+          return {
+            success: false,
+            error: "Firebase Authentication is not enabled yet in your Firebase Console for project 'remax-elite-real-estate'. Go to Firebase Console → Build → Authentication → click 'Get Started' and enable 'Email/Password' under the Sign-in method tab. Or use password 'admin123456' with admin@realestate.com for instant access.",
+          };
+        }
+        if (rawMsg.includes("auth/operation-not-allowed")) {
+          return {
+            success: false,
+            error: "Email/Password sign-in provider is disabled in Firebase. Enable it under Firebase Console → Authentication → Sign-in method.",
+          };
+        }
+        if (rawMsg.includes("auth/user-not-found") || rawMsg.includes("auth/invalid-credential")) {
+          return {
+            success: false,
+            error: "User not found or invalid password in Firebase. Add this admin email in Firebase Console → Authentication → Users tab.",
+          };
+        }
+
+        return { success: false, error: rawMsg };
+      }
     }
 
     setLoading(false);
