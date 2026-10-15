@@ -264,22 +264,22 @@ export default function HomePage() {
             </div>
 
             {/* Feature Highlights Banner */}
-            <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl border-t border-white/10 text-left">
+            <div className="pt-4 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-3xl border-t border-white/10 text-left">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-red-500 shrink-0" />
-                <span className="text-xs text-slate-300 font-medium">Side-by-Side Matrix</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-red-500 shrink-0" />
-                <span className="text-xs text-slate-300 font-medium">Verified Price / Sqft</span>
+                <span className="text-xs text-slate-200 font-medium">Verified Property Listings</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0" />
-                <span className="text-xs text-slate-300 font-medium">Real-Time Firebase</span>
+                <span className="text-xs text-slate-200 font-medium">Islandwide Property Search</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-red-500 shrink-0" />
+                <span className="text-xs text-slate-200 font-medium">Price per Sqft Comparison</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0" />
-                <span className="text-xs text-slate-300 font-medium">Schema.org SEO</span>
+                <span className="text-xs text-slate-200 font-medium">Side-by-Side Property Comparison</span>
               </div>
             </div>
           </div>
