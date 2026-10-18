@@ -116,29 +116,30 @@ export default function PropertyCard({ property, priority = false }: PropertyCar
           )}
         </div>
 
-        {/* Property Type Badge */}
-        <div className="absolute top-3 right-3 z-10">
-          <span className="px-2.5 py-1 text-xs font-semibold rounded-md bg-white/95 text-slate-900 backdrop-blur-md shadow-sm">
+        {/* Floating Property Type & Price Overlay */}
+        <div className="absolute bottom-3 left-3 right-3 z-10 flex flex-col items-start gap-1">
+          {/* Property Type Badge */}
+          <span className="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-white/95 text-slate-900 backdrop-blur-md shadow-sm">
             {property.propertyType}
           </span>
-        </div>
 
-        {/* Floating Price overlay */}
-        <div className="absolute bottom-3 left-3 z-10">
-          <span className="text-2xl font-black text-white tracking-tight drop-shadow-md">
-            {formattedPrice}
-          </span>
-          {property.listingType === "For Rent" ? (
-            property.securityDeposit ? (
-              <span className="text-[11px] text-emerald-300 font-bold ml-1.5 drop-shadow">
-                • Dep: {formatLKR(property.securityDeposit)}
-              </span>
-            ) : null
-          ) : (
-            <span className="text-xs text-slate-200 font-semibold ml-1.5 drop-shadow">
-              (Rs. {pricePerSqft.toLocaleString()}/sqft)
+          {/* Price & Specs */}
+          <div className="flex items-baseline flex-wrap gap-1">
+            <span className="text-2xl font-black text-white tracking-tight drop-shadow-md">
+              {formattedPrice}
             </span>
-          )}
+            {property.listingType === "For Rent" ? (
+              property.securityDeposit ? (
+                <span className="text-[11px] text-emerald-300 font-bold ml-1 drop-shadow">
+                  • Dep: {formatLKR(property.securityDeposit)}
+                </span>
+              ) : null
+            ) : (
+              <span className="text-xs text-slate-200 font-semibold ml-1 drop-shadow">
+                (Rs. {pricePerSqft.toLocaleString()}/sqft)
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
