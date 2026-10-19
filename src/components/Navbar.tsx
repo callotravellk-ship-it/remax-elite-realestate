@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useComparison } from "@/context/ComparisonContext";
 import { useAuth } from "@/context/AuthContext";
+import ThemeToggle from "@/components/ThemeToggle";
 import {
   Home,
   Building2,
@@ -61,7 +62,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-100 bg-white/95 backdrop-blur-md transition-all shadow-xs">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md transition-colors duration-200 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo with actual RE/MAX ELITE branding */}
@@ -84,9 +85,9 @@ export default function Navbar() {
             <Link
               href="/?type=sale#listings"
               onClick={(e) => handleNavTypeClick(e, "sale")}
-              className="text-sm font-semibold transition-colors hover:text-red-600 text-slate-700 flex items-center gap-1.5"
+              className="text-sm font-semibold transition-colors hover:text-red-600 dark:hover:text-red-400 text-slate-700 dark:text-slate-300 flex items-center gap-1.5"
             >
-              <Home className="w-4 h-4 text-slate-600" />
+              <Home className="w-4 h-4 text-slate-600 dark:text-slate-400" />
               <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
               <span>For Sale</span>
             </Link>
@@ -95,9 +96,9 @@ export default function Navbar() {
             <Link
               href="/?type=rent#listings"
               onClick={(e) => handleNavTypeClick(e, "rent")}
-              className="text-sm font-semibold transition-colors hover:text-red-600 text-slate-700 flex items-center gap-1.5"
+              className="text-sm font-semibold transition-colors hover:text-red-600 dark:hover:text-red-400 text-slate-700 dark:text-slate-300 flex items-center gap-1.5"
             >
-              <Building2 className="w-4 h-4 text-slate-600" />
+              <Building2 className="w-4 h-4 text-slate-600 dark:text-slate-400" />
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               <span>For Rent</span>
             </Link>
@@ -108,8 +109,8 @@ export default function Navbar() {
               onClick={(e) => handleNavTypeClick(e, "all")}
               className={`text-sm flex items-center gap-1.5 transition-all relative ${
                 pathname === "/"
-                  ? "bg-red-50 text-red-600 font-bold px-3.5 py-1.5 rounded-xl shadow-xs"
-                  : "text-slate-700 hover:text-red-600 font-semibold px-2 py-1.5"
+                  ? "bg-red-50 dark:bg-red-950/50 text-red-600 dark:text-red-400 font-bold px-3.5 py-1.5 rounded-xl shadow-xs"
+                  : "text-slate-700 dark:text-slate-300 hover:text-red-600 dark:hover:text-red-400 font-semibold px-2 py-1.5"
               }`}
             >
               <List className="w-4 h-4" />
@@ -122,13 +123,13 @@ export default function Navbar() {
             {/* Compare */}
             <Link
               href="/compare"
-              className={`text-sm font-semibold transition-colors hover:text-red-600 flex items-center gap-1.5 relative ${
+              className={`text-sm font-semibold transition-colors hover:text-red-600 dark:hover:text-red-400 flex items-center gap-1.5 relative ${
                 pathname.startsWith("/compare")
-                  ? "text-red-600 font-bold"
-                  : "text-slate-700"
+                  ? "text-red-600 dark:text-red-400 font-bold"
+                  : "text-slate-700 dark:text-slate-300"
               }`}
             >
-              <BarChart3 className="w-4 h-4 text-slate-600" />
+              <BarChart3 className="w-4 h-4 text-slate-600 dark:text-slate-400" />
               <span>Compare</span>
               {compareCount > 0 && (
                 <span className="inline-flex items-center justify-center px-1.5 py-0.2 text-[10px] font-bold text-white bg-red-600 rounded-full shadow-xs">
@@ -143,11 +144,11 @@ export default function Navbar() {
             {/* About Us */}
             <Link
               href="/about"
-              className={`text-sm font-semibold transition-colors hover:text-red-600 flex items-center gap-1.5 relative ${
-                pathname === "/about" ? "text-red-600 font-bold" : "text-slate-700"
+              className={`text-sm font-semibold transition-colors hover:text-red-600 dark:hover:text-red-400 flex items-center gap-1.5 relative ${
+                pathname === "/about" ? "text-red-600 dark:text-red-400 font-bold" : "text-slate-700 dark:text-slate-300"
               }`}
             >
-              <Users className="w-4 h-4 text-slate-600" />
+              <Users className="w-4 h-4 text-slate-600 dark:text-slate-400" />
               <span>About Us</span>
               {pathname === "/about" && (
                 <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-8 h-[2.5px] bg-red-600 rounded-full" />
@@ -157,11 +158,11 @@ export default function Navbar() {
             {/* Contact */}
             <Link
               href="/contact"
-              className={`text-sm font-semibold transition-colors hover:text-red-600 flex items-center gap-1.5 relative ${
-                pathname === "/contact" ? "text-red-600 font-bold" : "text-slate-700"
+              className={`text-sm font-semibold transition-colors hover:text-red-600 dark:hover:text-red-400 flex items-center gap-1.5 relative ${
+                pathname === "/contact" ? "text-red-600 dark:text-red-400 font-bold" : "text-slate-700 dark:text-slate-300"
               }`}
             >
-              <Mail className="w-4 h-4 text-slate-600" />
+              <Mail className="w-4 h-4 text-slate-600 dark:text-slate-400" />
               <span>Contact</span>
               {pathname === "/contact" && (
                 <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-8 h-[2.5px] bg-red-600 rounded-full" />
@@ -169,8 +170,11 @@ export default function Navbar() {
             </Link>
           </nav>
 
-          {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center">
+          {/* Desktop CTA & Theme Toggle */}
+          <div className="hidden lg:flex items-center gap-3">
+            {/* Theme Toggle (Right before Post Listing) */}
+            <ThemeToggle />
+
             {/* Post Listing Pill Button */}
             <Link
               href="/admin/new"
@@ -181,14 +185,15 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex items-center lg:hidden gap-3">
+          {/* Mobile Menu Button & Mobile Theme Toggle */}
+          <div className="flex items-center lg:hidden gap-2">
+            <ThemeToggle />
             <Link
               href="/compare"
-              className="relative p-2 text-slate-700 hover:text-red-600"
+              className="relative p-2 text-slate-700 dark:text-slate-300 hover:text-red-600"
               aria-label="Compare Tray"
             >
-              <BarChart3 className="w-6 h-6 text-slate-700" />
+              <BarChart3 className="w-6 h-6 text-slate-700 dark:text-slate-300" />
               {compareCount > 0 && (
                 <span className="absolute top-1 right-1 w-4 h-4 text-[10px] font-bold text-white bg-red-600 rounded-full flex items-center justify-center">
                   {compareCount}
@@ -197,7 +202,7 @@ export default function Navbar() {
             </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-800 hover:text-red-600 rounded-lg"
+              className="p-2 text-slate-800 dark:text-slate-200 hover:text-red-600 rounded-lg"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -207,29 +212,29 @@ export default function Navbar() {
 
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-slate-100 space-y-2 animate-in slide-in-from-top-2">
+          <div className="lg:hidden py-4 border-t border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 space-y-2 animate-in slide-in-from-top-2">
             <Link
               href="/?type=sale#listings"
               onClick={() => handleMobileNavTypeClick("sale")}
-              className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-semibold"
+              className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 font-semibold"
             >
-              <Home className="w-5 h-5 text-slate-600" />
+              <Home className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               <span className="w-2 h-2 rounded-full bg-blue-600"></span>
               <span>For Sale</span>
             </Link>
             <Link
               href="/?type=rent#listings"
               onClick={() => handleMobileNavTypeClick("rent")}
-              className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-semibold"
+              className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 font-semibold"
             >
-              <Building2 className="w-5 h-5 text-slate-600" />
+              <Building2 className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
               <span>For Rent</span>
             </Link>
             <Link
               href="/#listings"
               onClick={() => handleMobileNavTypeClick("all")}
-              className="flex items-center gap-3 px-3 py-2 rounded-lg text-red-600 bg-red-50/80 font-bold"
+              className="flex items-center gap-3 px-3 py-2 rounded-lg text-red-600 dark:text-red-400 bg-red-50/80 dark:bg-red-950/50 font-bold"
             >
               <List className="w-5 h-5 text-red-600" />
               <span>All Listings</span>
@@ -237,10 +242,10 @@ export default function Navbar() {
             <Link
               href="/compare"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-between px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-semibold"
+              className="flex items-center justify-between px-3 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 font-semibold"
             >
               <div className="flex items-center gap-3">
-                <BarChart3 className="w-5 h-5 text-slate-600" />
+                <BarChart3 className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                 <span>Compare</span>
               </div>
               {compareCount > 0 && (
@@ -252,17 +257,17 @@ export default function Navbar() {
             <Link
               href="/about"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-semibold"
+              className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 font-semibold"
             >
-              <Users className="w-5 h-5 text-slate-600" />
+              <Users className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               <span>About Us</span>
             </Link>
             <Link
               href="/contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-semibold"
+              className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 font-semibold"
             >
-              <Mail className="w-5 h-5 text-slate-600" />
+              <Mail className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               <span>Contact</span>
             </Link>
             <div className="pt-2">

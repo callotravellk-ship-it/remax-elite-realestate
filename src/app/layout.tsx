@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ComparisonProvider } from "@/context/ComparisonContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ComparisonDrawer from "@/components/ComparisonDrawer";
@@ -70,16 +71,36 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}>
-      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 font-sans selection:bg-red-100 selection:text-red-900">
-        <AuthProvider>
-          <ComparisonProvider>
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <ComparisonDrawer />
-            <Footer />
-          </ComparisonProvider>
-        </AuthProvider>
+    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const t = localStorage.getItem('remax_theme');
+                if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark');
+                  document.documentElement.classList.remove('light');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                  document.documentElement.classList.add('light');
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-red-100 dark:selection:bg-red-950 selection:text-red-900 dark:selection:text-red-200 transition-colors duration-200">
+        <ThemeProvider>
+          <AuthProvider>
+            <ComparisonProvider>
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <ComparisonDrawer />
+              <Footer />
+            </ComparisonProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

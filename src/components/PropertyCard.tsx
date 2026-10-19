@@ -53,13 +53,13 @@ export default function PropertyCard({ property, priority = false }: PropertyCar
       : property.images[0];
 
   return (
-    <div className="group relative flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+    <div className="group relative flex flex-col bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl dark:hover:shadow-slate-950/60 transition-all duration-300 hover:-translate-y-1">
       {/* Image Container */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-200">
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-200 dark:bg-slate-800">
         <Link href={`/properties/${property.id}`} className="block w-full h-full">
           {/* Shimmer skeleton until image loads */}
           {!isLoaded && !imgError && (
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 animate-pulse" />
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800 animate-pulse" />
           )}
           <Image
             src={heroImage}
@@ -119,7 +119,7 @@ export default function PropertyCard({ property, priority = false }: PropertyCar
         {/* Floating Property Type & Price Overlay */}
         <div className="absolute bottom-3 left-3 right-3 z-10 flex flex-col items-start gap-1">
           {/* Property Type Badge */}
-          <span className="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-white/95 text-slate-900 backdrop-blur-md shadow-sm">
+          <span className="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-white/95 dark:bg-slate-900/90 text-slate-900 dark:text-slate-100 backdrop-blur-md shadow-sm">
             {property.propertyType}
           </span>
 
@@ -146,7 +146,7 @@ export default function PropertyCard({ property, priority = false }: PropertyCar
       {/* Card Body */}
       <div className="p-5 flex flex-col flex-1">
         {/* Address */}
-        <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500 mb-1.5">
+        <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5">
           <MapPin className="w-3.5 h-3.5 text-red-600 shrink-0" />
           <span className="truncate">
             {property.address.neighborhood ? `${property.address.neighborhood}, ` : ""}
@@ -155,29 +155,29 @@ export default function PropertyCard({ property, priority = false }: PropertyCar
         </div>
 
         {/* Title */}
-        <Link href={`/properties/${property.id}`} className="group-hover:text-red-600 transition-colors">
-          <h3 className="text-lg font-bold text-slate-900 tracking-tight line-clamp-1">
+        <Link href={`/properties/${property.id}`} className="group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight line-clamp-1">
             {property.title}
           </h3>
         </Link>
 
         {/* Tagline */}
-        <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed flex-1">
+        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed flex-1">
           {property.tagline}
         </p>
 
         {/* Key Specs Bar */}
-        <div className="grid grid-cols-3 gap-2 py-3.5 my-3.5 border-y border-slate-100 text-slate-700">
+        <div className="grid grid-cols-3 gap-2 py-3.5 my-3.5 border-y border-slate-100 dark:border-slate-800 text-slate-700 dark:text-slate-300">
           <div className="flex items-center gap-1.5 text-xs font-semibold">
-            <Bed className="w-4 h-4 text-blue-700" />
+            <Bed className="w-4 h-4 text-blue-700 dark:text-blue-400" />
             <span>{property.bedrooms} Beds</span>
           </div>
           <div className="flex items-center gap-1.5 text-xs font-semibold">
-            <Bath className="w-4 h-4 text-blue-700" />
+            <Bath className="w-4 h-4 text-blue-700 dark:text-blue-400" />
             <span>{property.bathrooms} Baths</span>
           </div>
           <div className="flex items-center gap-1.5 text-xs font-semibold">
-            <Maximize2 className="w-4 h-4 text-blue-700" />
+            <Maximize2 className="w-4 h-4 text-blue-700 dark:text-blue-400" />
             <span>
               {property.squareFeet.toLocaleString()} sqft
               {property.lotSizePerches ? ` • ${property.lotSizePerches}P` : ""}
@@ -191,13 +191,13 @@ export default function PropertyCard({ property, priority = false }: PropertyCar
             {property.amenities.slice(0, 3).map((amenity) => (
               <span
                 key={amenity}
-                className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-medium"
+                className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium"
               >
                 {amenity}
               </span>
             ))}
             {property.amenities.length > 3 && (
-              <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 font-medium">
+              <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-medium">
                 +{property.amenities.length - 3} more
               </span>
             )}
@@ -206,7 +206,7 @@ export default function PropertyCard({ property, priority = false }: PropertyCar
 
         {/* Feedback alert if compare is full */}
         {feedback && (
-          <div className="mb-2 p-2 bg-red-50 border border-red-200 text-red-800 text-xs rounded-lg animate-in fade-in">
+          <div className="mb-2 p-2 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 text-red-800 dark:text-red-300 text-xs rounded-lg animate-in fade-in">
             {feedback}
           </div>
         )}
@@ -219,19 +219,19 @@ export default function PropertyCard({ property, priority = false }: PropertyCar
             type="button"
             className={`flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold rounded-xl border transition-all ${
               inCompare
-                ? "bg-red-50 text-red-700 border-red-300 hover:bg-red-100 shadow-sm"
-                : "bg-white text-slate-700 border-slate-300 hover:border-red-600 hover:text-red-700 hover:bg-red-50/40"
+                ? "bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 border-red-300 dark:border-red-900/60 hover:bg-red-100 dark:hover:bg-red-900/50 shadow-sm"
+                : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-300 dark:border-slate-700 hover:border-red-600 dark:hover:border-red-500 hover:text-red-700 dark:hover:text-red-400 hover:bg-red-50/40 dark:hover:bg-slate-750"
             }`}
           >
             {inCompare ? (
               <>
-                <Check className="w-3.5 h-3.5 text-red-600 stroke-[3]" />
+                <Check className="w-3.5 h-3.5 text-red-600 dark:text-red-400 stroke-[3]" />
                 <span>Added to Compare</span>
               </>
             ) : (
               <>
-                <Plus className="w-3.5 h-3.5 text-slate-400" />
-                <Scale className="w-3.5 h-3.5 text-blue-700" />
+                <Plus className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
+                <Scale className="w-3.5 h-3.5 text-blue-700 dark:text-blue-400" />
                 <span>Add to Compare</span>
               </>
             )}
@@ -240,7 +240,7 @@ export default function PropertyCard({ property, priority = false }: PropertyCar
           {/* View Details Link */}
           <Link
             href={`/properties/${property.id}`}
-            className="inline-flex items-center justify-center px-4 py-2 text-xs font-bold text-white bg-blue-900 hover:bg-blue-800 rounded-xl transition-colors shadow-sm"
+            className="inline-flex items-center justify-center px-4 py-2 text-xs font-bold text-white bg-blue-900 hover:bg-blue-800 dark:bg-blue-700 dark:hover:bg-blue-600 rounded-xl transition-colors shadow-sm"
           >
             View Details
           </Link>
