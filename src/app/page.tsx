@@ -44,12 +44,29 @@ function UrlTypeWatcher({
 
   useEffect(() => {
     const typeParam = searchParams.get("type");
+    let hasTypeChange = false;
+
     if (typeParam === "sale" || typeParam === "for-sale") {
       onSelectType("For Sale");
+      hasTypeChange = true;
     } else if (typeParam === "rent" || typeParam === "for-rent") {
       onSelectType("For Rent");
+      hasTypeChange = true;
     } else if (typeParam === "all") {
       onSelectType("All");
+      hasTypeChange = true;
+    }
+
+    // When typeParam is present or hash is #listings, smoothly scroll down to listings section
+    const hasListingsHash = typeof window !== "undefined" && window.location.hash === "#listings";
+    if (hasTypeChange || hasListingsHash) {
+      const timer = setTimeout(() => {
+        const el = document.getElementById("listings");
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+      return () => clearTimeout(timer);
     }
   }, [searchParams, onSelectType]);
 
@@ -323,7 +340,7 @@ export default function HomePage() {
       </section>
 
       {/* Main Content & Listings */}
-      <section id="listings" className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12">
+      <section id="listings" className="scroll-mt-20 sm:scroll-mt-24 relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12">
         {/* Search & Filter Component */}
         <SearchFilterBar
           filters={filters}

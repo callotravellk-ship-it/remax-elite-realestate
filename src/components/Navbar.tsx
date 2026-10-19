@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useComparison } from "@/context/ComparisonContext";
 import { useAuth } from "@/context/AuthContext";
 import {
@@ -23,11 +23,42 @@ import {
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { selectedProperties } = useComparison();
   const { user, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const compareCount = selectedProperties.length;
+
+  const handleNavTypeClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    type: "sale" | "rent" | "all"
+  ) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      const targetQuery = type === "all" ? "" : `?type=${type}`;
+      router.push(`/${targetQuery}#listings`, { scroll: false });
+
+      const el = document.getElementById("listings");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
+
+  const handleMobileNavTypeClick = (type: "sale" | "rent" | "all") => {
+    setMobileMenuOpen(false);
+    if (pathname === "/") {
+      const targetQuery = type === "all" ? "" : `?type=${type}`;
+      router.push(`/${targetQuery}#listings`, { scroll: false });
+      setTimeout(() => {
+        const el = document.getElementById("listings");
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 50);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-slate-100 bg-white/95 backdrop-blur-md transition-all shadow-xs">
@@ -51,7 +82,8 @@ export default function Navbar() {
           <nav className="hidden lg:flex items-center gap-5 xl:gap-6">
             {/* For Sale */}
             <Link
-              href="/?type=sale"
+              href="/?type=sale#listings"
+              onClick={(e) => handleNavTypeClick(e, "sale")}
               className="text-sm font-semibold transition-colors hover:text-red-600 text-slate-700 flex items-center gap-1.5"
             >
               <Home className="w-4 h-4 text-slate-600" />
@@ -61,7 +93,8 @@ export default function Navbar() {
 
             {/* For Rent */}
             <Link
-              href="/?type=rent"
+              href="/?type=rent#listings"
+              onClick={(e) => handleNavTypeClick(e, "rent")}
               className="text-sm font-semibold transition-colors hover:text-red-600 text-slate-700 flex items-center gap-1.5"
             >
               <Building2 className="w-4 h-4 text-slate-600" />
@@ -71,7 +104,8 @@ export default function Navbar() {
 
             {/* All Listings (Active tab styling with red pill and underline) */}
             <Link
-              href="/"
+              href="/#listings"
+              onClick={(e) => handleNavTypeClick(e, "all")}
               className={`text-sm flex items-center gap-1.5 transition-all relative ${
                 pathname === "/"
                   ? "bg-red-50 text-red-600 font-bold px-3.5 py-1.5 rounded-xl shadow-xs"
@@ -175,8 +209,8 @@ export default function Navbar() {
         {mobileMenuOpen && (
           <div className="lg:hidden py-4 border-t border-slate-100 space-y-2 animate-in slide-in-from-top-2">
             <Link
-              href="/?type=sale"
-              onClick={() => setMobileMenuOpen(false)}
+              href="/?type=sale#listings"
+              onClick={() => handleMobileNavTypeClick("sale")}
               className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-semibold"
             >
               <Home className="w-5 h-5 text-slate-600" />
@@ -184,8 +218,8 @@ export default function Navbar() {
               <span>For Sale</span>
             </Link>
             <Link
-              href="/?type=rent"
-              onClick={() => setMobileMenuOpen(false)}
+              href="/?type=rent#listings"
+              onClick={() => handleMobileNavTypeClick("rent")}
               className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-semibold"
             >
               <Building2 className="w-5 h-5 text-slate-600" />
@@ -193,8 +227,8 @@ export default function Navbar() {
               <span>For Rent</span>
             </Link>
             <Link
-              href="/"
-              onClick={() => setMobileMenuOpen(false)}
+              href="/#listings"
+              onClick={() => handleMobileNavTypeClick("all")}
               className="flex items-center gap-3 px-3 py-2 rounded-lg text-red-600 bg-red-50/80 font-bold"
             >
               <List className="w-5 h-5 text-red-600" />
