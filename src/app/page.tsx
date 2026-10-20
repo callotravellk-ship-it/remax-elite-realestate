@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import PropertyCard from "@/components/PropertyCard";
 import SearchFilterBar from "@/components/SearchFilterBar";
+import HeroVideoBackground from "@/components/HeroVideoBackground";
 import { Property, PropertyFilterState, ListingType } from "@/types/property";
 import { getProperties } from "@/lib/propertyService";
 import { initialProperties } from "@/data/mockProperties";
@@ -201,21 +202,8 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-slate-950 text-white min-h-[580px] lg:min-h-[620px] flex items-center pt-16 pb-24 px-4 sm:px-6 lg:px-8">
-        {/* Full-bleed background image */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/hero-bg.jpg"
-            alt="Luxury Real Estate Colombo Sri Lanka"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center lg:object-right"
-          />
-          {/* Dark gradient overlay on the left to guarantee high contrast for text */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-950/30" />
-          {/* Subtle top & bottom vignette to blend seamlessly */}
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-transparent to-slate-950/90" />
-        </div>
+        {/* High-Performance Hero Background with Instant Poster & Ambient Video */}
+        <HeroVideoBackground />
 
         <div className="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Heading, Badges, and Text */}
