@@ -67,14 +67,24 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo with actual RE/MAX ELITE branding */}
           <Link href="/" className="flex items-center gap-2 shrink-0 group">
-            <div className="relative h-10 w-28 sm:w-32 flex items-center">
+            <div className="relative h-10 flex items-center">
+              {/* Light Mode Logo */}
               <Image
                 src="/logo.png"
                 alt="RE/MAX ELITE"
                 width={140}
                 height={70}
                 priority
-                className="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105"
+                className="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105 block dark:hidden"
+              />
+              {/* Dark Mode Logo */}
+              <Image
+                src="/logo-dark.png"
+                alt="RE/MAX ELITE"
+                width={160}
+                height={65}
+                priority
+                className="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105 hidden dark:block"
               />
             </div>
           </Link>

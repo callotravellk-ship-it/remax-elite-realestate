@@ -67,7 +67,14 @@ export default function AdminLayout({
                 alt="RE/MAX ELITE"
                 fill
                 priority
-                className="object-contain"
+                className="object-contain block dark:hidden"
+              />
+              <Image
+                src="/logo-dark.png"
+                alt="RE/MAX ELITE"
+                fill
+                priority
+                className="object-contain hidden dark:block"
               />
             </div>
             <h1 className="text-2xl font-black text-slate-900 tracking-tight">
@@ -170,9 +177,9 @@ export default function AdminLayout({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-3">
-              <div className="relative h-9 w-24 bg-white rounded p-1">
+              <div className="relative h-9 w-28">
                 <Image
-                  src="/logo.png"
+                  src="/logo-dark.png"
                   alt="RE/MAX ELITE"
                   fill
                   className="object-contain"

@@ -435,20 +435,26 @@ export default function PropertyDetailView({
           {/* Right Column: Contact Inquiry & Agent Card */}
           <div className="lg:col-span-4 space-y-6 sticky top-28">
             <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-5">
-              <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
-                <div className="relative h-10 w-24">
+              <div className="flex items-center gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+                <div className="relative h-10 w-28">
                   <Image
                     src="/logo.png"
                     alt="RE/MAX ELITE"
                     fill
-                    className="object-contain"
+                    className="object-contain block dark:hidden"
+                  />
+                  <Image
+                    src="/logo-dark.png"
+                    alt="RE/MAX ELITE"
+                    fill
+                    className="object-contain hidden dark:block"
                   />
                 </div>
                 <div>
-                  <h3 className="text-xs font-bold text-slate-900">
+                  <h3 className="text-xs font-bold text-slate-900 dark:text-white">
                     RE/MAX ELITE Group
                   </h3>
-                  <p className="text-[11px] text-slate-500">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
                     Exclusive Listing Representation
                   </p>
                 </div>

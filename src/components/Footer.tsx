@@ -11,12 +11,12 @@ export default function Footer() {
           {/* Brand Col */}
           <div className="space-y-4 md:col-span-1">
             <div className="flex items-center gap-3">
-              <div className="relative h-12 w-32 bg-white rounded-lg p-1">
+              <div className="relative h-12 w-36">
                 <Image
-                  src="/logo.png"
+                  src="/logo-dark.png"
                   alt="RE/MAX ELITE"
                   fill
-                  className="object-contain p-1"
+                  className="object-contain object-left"
                 />
               </div>
             </div>
