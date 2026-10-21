@@ -57,6 +57,7 @@ export default function HeroVideoBackground() {
         muted
         playsInline
         preload="metadata"
+        poster="/hero-bg.jpg"
         className={`absolute inset-0 w-full h-full object-cover object-center lg:object-right transition-opacity duration-1000 ${
           isVideoPlaying ? "opacity-100" : "opacity-0"
         }`}
