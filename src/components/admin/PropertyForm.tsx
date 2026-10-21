@@ -19,6 +19,7 @@ import {
   Image as ImageIcon,
 } from "lucide-react";
 import Link from "next/link";
+import AdminLocationPicker from "./AdminLocationPicker";
 
 interface PropertyFormProps {
   initialData?: Property;
@@ -65,6 +66,9 @@ export default function PropertyForm({
   const [zipCode, setZipCode] = useState(initialData?.address.zipCode || "00700");
   const [neighborhood, setNeighborhood] = useState(
     initialData?.address.neighborhood || "Cinnamon Gardens"
+  );
+  const [coordinates, setCoordinates] = useState<{ latitude: number; longitude: number } | undefined>(
+    initialData?.address.coordinates
   );
 
   // Amenities
@@ -205,6 +209,7 @@ export default function PropertyForm({
         zipCode,
         neighborhood,
         country: "Sri Lanka",
+        coordinates: coordinates?.latitude && coordinates?.longitude ? coordinates : undefined,
       },
       amenities,
       images,
@@ -441,78 +446,106 @@ export default function PropertyForm({
         </div>
       </div>
 
-      {/* Location Details */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-        <h2 className="text-sm font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
-          <MapPin className="w-4 h-4 text-red-600" /> Location Details
-        </h2>
+      {/* Location Details & Google Map Pinning */}
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-5">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-white flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-red-600" /> Location & Google Map Pin
+          </h2>
+          <span className="text-[11px] text-slate-400">
+            Type address or click map to auto-fill
+          </span>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="sm:col-span-2">
-            <label className="block text-xs font-bold text-slate-700 mb-1">
-              Street Address *
-            </label>
-            <input
-              type="text"
-              required
-              placeholder="e.g. 24 Barnes Place"
-              value={street}
-              onChange={(e) => setStreet(e.target.value)}
-              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-600"
-            />
-          </div>
+        {/* Google Map Picker & Places Autocomplete */}
+        <AdminLocationPicker
+          currentCoordinates={coordinates}
+          street={street}
+          city={city}
+          neighborhood={neighborhood}
+          state={state}
+          zipCode={zipCode}
+          onChange={(loc) => {
+            if (loc.street !== undefined) setStreet(loc.street);
+            if (loc.neighborhood !== undefined) setNeighborhood(loc.neighborhood);
+            if (loc.city !== undefined) setCity(loc.city);
+            if (loc.state !== undefined) setState(loc.state);
+            if (loc.zipCode !== undefined) setZipCode(loc.zipCode);
+            if (loc.coordinates) setCoordinates(loc.coordinates);
+          }}
+        />
 
-          <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">
-              Neighborhood
-            </label>
-            <input
-              type="text"
-              placeholder="e.g. Wellawatte"
-              value={neighborhood}
-              onChange={(e) => setNeighborhood(e.target.value)}
-              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-600"
-            />
-          </div>
+        <div className="pt-2">
+          <span className="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-3">
+            Address Fields (Auto-populated from map or editable manually):
+          </span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="sm:col-span-2">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                Street Address *
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. 24 Barnes Place"
+                value={street}
+                onChange={(e) => setStreet(e.target.value)}
+                className="w-full px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-600"
+              />
+            </div>
 
-          <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">
-              City *
-            </label>
-            <input
-              type="text"
-              required
-              placeholder="e.g. Colombo 06"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-600"
-            />
-          </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                Neighborhood
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. Wellawatte"
+                value={neighborhood}
+                onChange={(e) => setNeighborhood(e.target.value)}
+                className="w-full px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-600"
+              />
+            </div>
 
-          <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">
-              Province / State
-            </label>
-            <input
-              type="text"
-              placeholder="e.g. Western Province"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-600"
-            />
-          </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                City *
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. Colombo 06"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                className="w-full px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-600"
+              />
+            </div>
 
-          <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">
-              Postal Code
-            </label>
-            <input
-              type="text"
-              placeholder="e.g. 00600"
-              value={zipCode}
-              onChange={(e) => setZipCode(e.target.value)}
-              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-600"
-            />
+            <div>
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                Province / State
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. Western Province"
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+                className="w-full px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-600"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                Postal Code
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. 00600"
+                value={zipCode}
+                onChange={(e) => setZipCode(e.target.value)}
+                className="w-full px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-600"
+              />
+            </div>
           </div>
         </div>
       </div>

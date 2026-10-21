@@ -7,6 +7,7 @@ import { Property } from "@/types/property";
 import { useComparison } from "@/context/ComparisonContext";
 import { formatLKR, formatPropertyPrice } from "@/lib/formatters";
 import MortgageCalculator from "@/components/MortgageCalculator";
+import PropertyMap from "@/components/PropertyMap";
 import {
   Bed,
   Bath,
@@ -281,27 +282,27 @@ export default function PropertyDetailView({
             </div>
 
             {/* Description Narrative */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-              <h2 className="text-lg font-bold text-slate-900 tracking-tight">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">
                 Architectural Overview & Narrative
               </h2>
-              <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-line">
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
                 {property.description}
               </p>
             </div>
 
             {/* Comprehensive Amenities */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-              <h2 className="text-lg font-bold text-slate-900 tracking-tight">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">
                 Amenities & Premium Features
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {property.amenities.map((amenity) => (
                   <div
                     key={amenity}
-                    className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 text-xs font-semibold text-slate-800 border border-slate-100"
+                    className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-semibold text-slate-800 dark:text-slate-200 border border-slate-100 dark:border-slate-700"
                   >
-                    <div className="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 font-bold">
+                    <div className="w-5 h-5 rounded-full bg-red-100 dark:bg-red-950/60 text-red-600 dark:text-red-400 flex items-center justify-center shrink-0 font-bold">
                       <Check className="w-3 h-3 stroke-[3]" />
                     </div>
                     <span>{amenity}</span>
@@ -311,22 +312,22 @@ export default function PropertyDetailView({
             </div>
 
             {/* Architectural Specs Table */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-              <h2 className="text-lg font-bold text-slate-900 tracking-tight">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">
                 Property Specifications & Taxes
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="text-slate-500">Property Type</span>
-                  <span className="font-bold text-slate-900">{property.propertyType}</span>
+                <div className="flex justify-between py-2 border-b border-slate-100 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400">Property Type</span>
+                  <span className="font-bold text-slate-900 dark:text-white">{property.propertyType}</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="text-slate-500">Garage Capacity</span>
-                  <span className="font-bold text-slate-900">{property.garageSpaces} Vehicles</span>
+                <div className="flex justify-between py-2 border-b border-slate-100 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400">Garage Capacity</span>
+                  <span className="font-bold text-slate-900 dark:text-white">{property.garageSpaces} Vehicles</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="text-slate-500">Land Extent</span>
-                  <span className="font-bold text-slate-900">
+                <div className="flex justify-between py-2 border-b border-slate-100 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400">Land Extent</span>
+                  <span className="font-bold text-slate-900 dark:text-white">
                     {property.lotSizePerches
                       ? `${property.lotSizePerches} Perches (${property.lotSizeSqft?.toLocaleString() || property.squareFeet.toLocaleString()} sqft)`
                       : property.lotSizeSqft
@@ -334,90 +335,98 @@ export default function PropertyDetailView({
                       : "Apartment Unit"}
                   </span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="text-slate-500">Monthly Maintenance</span>
-                  <span className="font-bold text-slate-900">
+                <div className="flex justify-between py-2 border-b border-slate-100 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400">Monthly Maintenance</span>
+                  <span className="font-bold text-slate-900 dark:text-white">
                     {property.hoaFeeMonthly ? `Rs. ${property.hoaFeeMonthly.toLocaleString()}/month` : "None"}
                   </span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="text-slate-500">Annual Municipal Rates (Est.)</span>
-                  <span className="font-bold text-slate-900">
+                <div className="flex justify-between py-2 border-b border-slate-100 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400">Annual Municipal Rates (Est.)</span>
+                  <span className="font-bold text-slate-900 dark:text-white">
                     {property.annualTaxes ? `Rs. ${property.annualTaxes.toLocaleString()}/year` : "Assessed annually"}
                   </span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="text-slate-500">Status</span>
-                  <span className="font-bold text-slate-900">{property.status}</span>
+                <div className="flex justify-between py-2 border-b border-slate-100 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400">Status</span>
+                  <span className="font-bold text-slate-900 dark:text-white">{property.status}</span>
                 </div>
               </div>
             </div>
 
+            {/* Interactive Google Map Location */}
+            <PropertyMap
+              title={property.title}
+              price={property.price}
+              listingType={property.listingType}
+              address={property.address}
+            />
+
             {/* Interactive Mortgage Calculator for sales, or Lease Terms for rentals */}
             {property.listingType === "For Rent" ? (
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-5">
-                <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+              <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-5">
+                <div className="flex items-center gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
                     <KeyRound className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="text-base font-black text-slate-900 tracking-tight">
+                    <h3 className="text-base font-black text-slate-900 dark:text-white tracking-tight">
                       Lease Terms & Tenancy Framework
                     </h3>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
                       Standard luxury residential & corporate leasing terms in Colombo
                     </p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                  <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
-                    <span className="text-slate-500 block mb-1">Monthly Lease Rate</span>
-                    <span className="text-base font-black text-slate-900">
+                  <div className="p-3.5 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
+                    <span className="text-slate-500 dark:text-slate-400 block mb-1">Monthly Lease Rate</span>
+                    <span className="text-base font-black text-slate-900 dark:text-white">
                       {formattedPrice}
                     </span>
-                    <span className="text-[11px] text-slate-400 block mt-0.5">
+                    <span className="text-[11px] text-slate-400 dark:text-slate-500 block mt-0.5">
                       Payable on the 1st of each calendar month
                     </span>
                   </div>
 
-                  <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
-                    <span className="text-slate-500 block mb-1">Refundable Security Deposit</span>
-                    <span className="text-base font-black text-emerald-700">
+                  <div className="p-3.5 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
+                    <span className="text-slate-500 dark:text-slate-400 block mb-1">Refundable Security Deposit</span>
+                    <span className="text-base font-black text-emerald-700 dark:text-emerald-400">
                       {property.securityDeposit
                         ? formatLKR(property.securityDeposit)
                         : "6 Months Rental Equivalent"}
                     </span>
-                    <span className="text-[11px] text-slate-400 block mt-0.5">
+                    <span className="text-[11px] text-slate-400 dark:text-slate-500 block mt-0.5">
                       Fully refundable at completion of tenancy
                     </span>
                   </div>
 
-                  <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
-                    <span className="text-slate-500 block mb-1">Minimum Lease Duration</span>
-                    <span className="text-base font-black text-slate-900">
+                  <div className="p-3.5 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
+                    <span className="text-slate-500 dark:text-slate-400 block mb-1">Minimum Lease Duration</span>
+                    <span className="text-base font-black text-slate-900 dark:text-white">
                       1 Year (12 Months)
                     </span>
-                    <span className="text-[11px] text-slate-400 block mt-0.5">
+                    <span className="text-[11px] text-slate-400 dark:text-slate-500 block mt-0.5">
                       Option for annual mutual extension
                     </span>
                   </div>
 
-                  <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
-                    <span className="text-slate-500 block mb-1">Utilities & Maintenance</span>
-                    <span className="text-base font-black text-slate-900">
+                  <div className="p-3.5 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
+                    <span className="text-slate-500 dark:text-slate-400 block mb-1">Utilities & Maintenance</span>
+                    <span className="text-base font-black text-slate-900 dark:text-white">
                       {property.hoaFeeMonthly
                         ? `Rs. ${property.hoaFeeMonthly.toLocaleString()}/mo`
                         : "Included"}
                     </span>
-                    <span className="text-[11px] text-slate-400 block mt-0.5">
+                    <span className="text-[11px] text-slate-400 dark:text-slate-500 block mt-0.5">
                       Electricity & water metered independently
                     </span>
                   </div>
                 </div>
 
-                <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-900 flex items-start gap-2.5">
-                  <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5 stroke-[2.5]" />
+                <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 rounded-xl border border-emerald-200 dark:border-emerald-900/60 text-xs text-emerald-900 dark:text-emerald-200 flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5 stroke-[2.5]" />
                   <span>
                     <strong>Corporate & Diplomatic Leases Welcome:</strong> RE/MAX ELITE Colombo provides complete legal agreement vetting, inventory condition reports, stamp duty compliance, and dedicated landlord-tenant liaison.
                   </span>
