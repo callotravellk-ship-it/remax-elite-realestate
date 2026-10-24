@@ -62,6 +62,8 @@ export default function PropertyForm({
   // Address
   const [street, setStreet] = useState(initialData?.address.street || "");
   const [city, setCity] = useState(initialData?.address.city || "Colombo 07");
+  const [district, setDistrict] = useState(initialData?.address.district || "Colombo");
+  const [town, setTown] = useState(initialData?.address.town || "");
   const [state, setState] = useState(initialData?.address.state || "Western Province");
   const [zipCode, setZipCode] = useState(initialData?.address.zipCode || "00700");
   const [neighborhood, setNeighborhood] = useState(
@@ -69,6 +71,14 @@ export default function PropertyForm({
   );
   const [coordinates, setCoordinates] = useState<{ latitude: number; longitude: number } | undefined>(
     initialData?.address.coordinates
+  );
+
+  // Trust Indicators
+  const [deedStatus, setDeedStatus] = useState<Property["deedStatus"]>(
+    initialData?.deedStatus || "Clear First-Class Title"
+  );
+  const [isVerifiedListing, setIsVerifiedListing] = useState<boolean>(
+    initialData?.isVerifiedListing ?? true
   );
 
   // Amenities
@@ -202,9 +212,15 @@ export default function PropertyForm({
       garageSpaces,
       hoaFeeMonthly,
       annualTaxes,
+      deedStatus,
+      isVerifiedListing,
+      proximity: initialData?.proximity,
+      legalChecklist: initialData?.legalChecklist,
       address: {
         street,
         city,
+        district,
+        town: town || neighborhood,
         state,
         zipCode,
         neighborhood,

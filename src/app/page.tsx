@@ -27,12 +27,17 @@ const initialFilters: PropertyFilterState = {
   searchQuery: "",
   propertyType: "",
   listingType: "All",
+  district: "",
+  town: "",
   minPrice: 0,
   maxPrice: 1000000000,
   minBedrooms: 0,
   minBathrooms: 0,
   minSqft: 0,
   amenities: [],
+  proximity: [],
+  verifiedOnly: false,
+  clearDeedOnly: false,
   sortBy: "newest",
 };
 
@@ -115,6 +120,44 @@ export default function HomePage() {
           if (!matchTitle && !matchCity && !matchNeighborhood && !matchType && !matchListingType) {
             return false;
           }
+        }
+
+        // District filter (Sri Lanka location-centric)
+        if (filters.district) {
+          const itemDistrict = item.address.district || "Colombo";
+          if (itemDistrict.toLowerCase() !== filters.district.toLowerCase()) {
+            return false;
+          }
+        }
+
+        // Town filter
+        if (filters.town) {
+          const targetTown = filters.town.toLowerCase();
+          const matchTown = item.address.town?.toLowerCase().includes(targetTown);
+          const matchCity = item.address.city.toLowerCase().includes(targetTown);
+          const matchNeighborhood = item.address.neighborhood?.toLowerCase().includes(targetTown);
+          if (!matchTown && !matchCity && !matchNeighborhood) {
+            return false;
+          }
+        }
+
+        // Trust Indicator: Clear Deed
+        if (filters.clearDeedOnly) {
+          const deed = item.deedStatus || "";
+          const hasClearDeed = deed.includes("Clear") || deed.includes("Sinnakkara") || deed.includes("Bim Saviya");
+          if (!hasClearDeed) return false;
+        }
+
+        // Trust Indicator: Verified Only
+        if (filters.verifiedOnly) {
+          if (!item.isVerifiedListing) return false;
+        }
+
+        // Proximity to essential infrastructure
+        if (filters.proximity && filters.proximity.length > 0) {
+          const itemProximity = item.proximity || [];
+          const matchesAll = filters.proximity.every((p) => itemProximity.includes(p));
+          if (!matchesAll) return false;
         }
 
         // Property type

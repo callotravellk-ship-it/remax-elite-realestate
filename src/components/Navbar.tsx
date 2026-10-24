@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useComparison } from "@/context/ComparisonContext";
 import { useAuth } from "@/context/AuthContext";
 import ThemeToggle from "@/components/ThemeToggle";
+import CurrencySelector from "@/components/CurrencySelector";
 import {
   Home,
   Building2,
@@ -180,8 +181,11 @@ export default function Navbar() {
             </Link>
           </nav>
 
-          {/* Desktop CTA & Theme Toggle */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* Desktop CTA, Currency Selector & Theme Toggle */}
+          <div className="hidden lg:flex items-center gap-2.5">
+            {/* Diaspora Currency Selector */}
+            <CurrencySelector />
+
             {/* Theme Toggle (Right before Post Listing) */}
             <ThemeToggle />
 
@@ -195,8 +199,9 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Menu Button & Mobile Theme Toggle */}
-          <div className="flex items-center lg:hidden gap-2">
+          {/* Mobile Menu Button, Currency & Mobile Theme Toggle */}
+          <div className="flex items-center lg:hidden gap-1.5">
+            <CurrencySelector compact />
             <ThemeToggle />
             <Link
               href="/compare"

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useComparison } from "@/context/ComparisonContext";
+import { useLocalization } from "@/context/LocalizationContext";
 import { formatLKR, formatPropertyPrice } from "@/lib/formatters";
 import {
   Scale,
@@ -23,6 +24,7 @@ export default function ComparisonDrawer() {
     maxProperties,
     getCompareUrl,
   } = useComparison();
+  const { formatPrice } = useLocalization();
 
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -81,7 +83,7 @@ export default function ComparisonDrawer() {
                     property.images?.[0] ||
                     "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80";
 
-                  const formattedPrice = formatPropertyPrice(property.price, property.listingType);
+                  const formattedPrice = formatPrice(property.price, property.listingType, true);
 
                   return (
                     <div

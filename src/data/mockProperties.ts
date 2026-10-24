@@ -29,11 +29,26 @@ export const initialProperties: Property[] = [
       zipCode: "00700",
       neighborhood: "Cinnamon Gardens",
       country: "Sri Lanka",
+      district: "Colombo",
+      town: "Colombo 07 - Cinnamon Gardens",
       coordinates: {
         latitude: 6.9128,
         longitude: 79.8711,
       },
     },
+        deedStatus: "Freehold Sinnakkara Deed",
+    isVerifiedListing: true,
+    legalChecklist: [
+      "30-Year Clear Title Search at Colombo Land Registry",
+      "Demarcated Survey Plan with Approved Boundaries",
+      "CMC Street Line & Building Limits Verified",
+      "100% Commercial Bank Mortgage Approved"
+],
+    proximity: [
+      "International Schools (< 1 km)",
+      "Premier Private Hospitals",
+      "Shopping Mall & Supermarket (< 5 mins)"
+],
     images: [
       "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=75&auto=format",
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=75&auto=format",
@@ -81,11 +96,26 @@ export const initialProperties: Property[] = [
       zipCode: "00300",
       neighborhood: "Kollupitiya",
       country: "Sri Lanka",
+      district: "Colombo",
+      town: "Colombo 03 - Kollupitiya",
       coordinates: {
         latitude: 6.9085,
         longitude: 79.8491,
       },
     },
+        deedStatus: "Bim Saviya (Title Certificate)",
+    isVerifiedListing: true,
+    legalChecklist: [
+      "Condominium Management Authority (CMA) Certificate of Conformity",
+      "Individual Deed of Declaration & Sub-Division",
+      "Unencumbered Title Search",
+      "Bank Loan & Diaspora Remittance Approved"
+],
+    proximity: [
+      "Beachfront / Walking to Coast",
+      "Shopping Mall & Supermarket (< 5 mins)",
+      "Train / Metro Transit Hub"
+],
     images: [
       "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=75&auto=format",
       "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=75&auto=format",
@@ -132,11 +162,26 @@ export const initialProperties: Property[] = [
       zipCode: "00500",
       neighborhood: "Havelock Town",
       country: "Sri Lanka",
+      district: "Colombo",
+      town: "Colombo 05 - Havelock Town",
       coordinates: {
         latitude: 6.8792,
         longitude: 79.8654,
       },
     },
+        deedStatus: "Bim Saviya (Title Certificate)",
+    isVerifiedListing: true,
+    legalChecklist: [
+      "CMA Registered Condominium Title",
+      "Clear Title Non-Encumbrance Certificate",
+      "Standardised Tenancy & Sale Deeds",
+      "Fast-Track Bank Loan Verification"
+],
+    proximity: [
+      "Shopping Mall & Supermarket (< 5 mins)",
+      "International Schools (< 1 km)",
+      "Premier Private Hospitals"
+],
     images: [
       "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=75&auto=format",
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=75&auto=format",
@@ -183,11 +228,26 @@ export const initialProperties: Property[] = [
       zipCode: "10370",
       neighborhood: "Mount Lavinia Coastal",
       country: "Sri Lanka",
+      district: "Colombo",
+      town: "Mount Lavinia",
       coordinates: {
         latitude: 6.8378,
         longitude: 79.8624,
       },
     },
+        deedStatus: "Freehold Sinnakkara Deed",
+    isVerifiedListing: true,
+    legalChecklist: [
+      "Coast Conservation Department (CCD) Setback Compliance",
+      "First-Class Freehold Sinnakkara Deed",
+      "Clear Title Search with Dehiwala Land Registry",
+      "Approved Municipal Drainage & Access Plan"
+],
+    proximity: [
+      "Beachfront / Walking to Coast",
+      "Train / Metro Transit Hub",
+      "International Schools (< 1 km)"
+],
     images: [
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800&q=75&auto=format",
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=75&auto=format",
@@ -233,11 +293,26 @@ export const initialProperties: Property[] = [
       zipCode: "10107",
       neighborhood: "Waters Edge Precinct",
       country: "Sri Lanka",
+      district: "Colombo",
+      town: "Rajagiriya",
       coordinates: {
         latitude: 6.9092,
         longitude: 79.8943,
       },
     },
+        deedStatus: "Clear First-Class Title",
+    isVerifiedListing: true,
+    legalChecklist: [
+      "SLLRDC & Urban Development Authority (UDA) Clearances",
+      "Unconditional First-Class Title Deed",
+      "Perimeter Demarcated Boundary Survey",
+      "100% Bank Financing Pre-Approved"
+],
+    proximity: [
+      "Expressway / Highway Interchange",
+      "International Schools (< 1 km)",
+      "Premier Private Hospitals"
+],
     images: [
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=75&auto=format",
       "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=75&auto=format",
@@ -284,11 +359,26 @@ export const initialProperties: Property[] = [
       zipCode: "00200",
       neighborhood: "Slave Island / Beira Lake",
       country: "Sri Lanka",
+      district: "Colombo",
+      town: "Colombo 02 - Slave Island",
       coordinates: {
         latitude: 6.9208,
         longitude: 79.8569,
       },
     },
+        deedStatus: "Bim Saviya (Title Certificate)",
+    isVerifiedListing: true,
+    legalChecklist: [
+      "CMA Certificate & Deed of Transfer Registered",
+      "Free from Legal Disputes & Caveats",
+      "Clear Municipal Tax Receipts",
+      "Commercial Bank Loan Approved"
+],
+    proximity: [
+      "Shopping Mall & Supermarket (< 5 mins)",
+      "Train / Metro Transit Hub",
+      "Premier Private Hospitals"
+],
     images: [
       "https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=800&q=75&auto=format",
       "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=75&auto=format",
@@ -334,11 +424,26 @@ export const initialProperties: Property[] = [
       zipCode: "00300",
       neighborhood: "Kollupitiya Commercial Zone",
       country: "Sri Lanka",
+      district: "Colombo",
+      town: "Colombo 03 - Kollupitiya",
       coordinates: {
         latitude: 6.9045,
         longitude: 79.8521,
       },
     },
+        deedStatus: "Clear First-Class Title",
+    isVerifiedListing: true,
+    legalChecklist: [
+      "Commercial Zoning & Municipal Authority Clearance",
+      "30-Year Pedigree Title Search",
+      "Fire Department & Safety Compliance Certificate",
+      "Institutional Corporate Title Verified"
+],
+    proximity: [
+      "Train / Metro Transit Hub",
+      "Shopping Mall & Supermarket (< 5 mins)",
+      "Expressway / Highway Interchange"
+],
     images: [
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=75&auto=format",
       "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=75&auto=format",
@@ -384,11 +489,26 @@ export const initialProperties: Property[] = [
       zipCode: "00700",
       neighborhood: "Cinnamon Gardens",
       country: "Sri Lanka",
+      district: "Colombo",
+      town: "Colombo 07 - Cinnamon Gardens",
       coordinates: {
         latitude: 6.9142,
         longitude: 79.8735,
       },
     },
+        deedStatus: "Freehold Sinnakkara Deed",
+    isVerifiedListing: true,
+    legalChecklist: [
+      "Freehold Title Verified with Colombo Land Registry",
+      "Diplomatic Lease Standard Agreement Ready",
+      "Full Inventory Audit & Fixture Warranty",
+      "Zero Encumbrances or Tenancy Disputes"
+],
+    proximity: [
+      "International Schools (< 1 km)",
+      "Premier Private Hospitals",
+      "Shopping Mall & Supermarket (< 5 mins)"
+],
     images: [
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=75&auto=format",
       "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=75&auto=format",
@@ -437,11 +557,26 @@ export const initialProperties: Property[] = [
       zipCode: "00500",
       neighborhood: "Havelock Town",
       country: "Sri Lanka",
+      district: "Colombo",
+      town: "Colombo 05 - Havelock Town",
       coordinates: {
         latitude: 6.8792,
         longitude: 79.8654,
       },
     },
+        deedStatus: "Bim Saviya (Title Certificate)",
+    isVerifiedListing: true,
+    legalChecklist: [
+      "Verified Landlord Ownership & CMA Documentation",
+      "Corporate Relocation Lease Framework Ready",
+      "Registered Tenancy Clearance",
+      "Verified Municipal Assessment Record"
+],
+    proximity: [
+      "Shopping Mall & Supermarket (< 5 mins)",
+      "International Schools (< 1 km)",
+      "Premier Private Hospitals"
+],
     images: [
       "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=75&auto=format",
       "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=75&auto=format",
@@ -489,11 +624,26 @@ export const initialProperties: Property[] = [
       zipCode: "00300",
       neighborhood: "Kollupitiya",
       country: "Sri Lanka",
+      district: "Colombo",
+      town: "Colombo 03 - Kollupitiya",
       coordinates: {
         latitude: 6.9012,
         longitude: 79.8504,
       },
     },
+        deedStatus: "Clear First-Class Title",
+    isVerifiedListing: true,
+    legalChecklist: [
+      "Condominium Ownership & Title Verified",
+      "Expedited Diplomatic / Expat Lease Terms",
+      "Verified Electricity & Utility Clearances",
+      "RE/MAX Elite Legal Vetting Completed"
+],
+    proximity: [
+      "Beachfront / Walking to Coast",
+      "Shopping Mall & Supermarket (< 5 mins)",
+      "Train / Metro Transit Hub"
+],
     images: [
       "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=75&auto=format",
       "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=75&auto=format",
@@ -540,11 +690,26 @@ export const initialProperties: Property[] = [
       zipCode: "00600",
       neighborhood: "Wellawatte",
       country: "Sri Lanka",
+      district: "Colombo",
+      town: "Colombo 06 - Wellawatte",
       coordinates: {
         latitude: 6.8732,
         longitude: 79.8601,
       },
     },
+        deedStatus: "Clear First-Class Title",
+    isVerifiedListing: true,
+    legalChecklist: [
+      "Title Deed Checked with Land Registry",
+      "Residential Lease Agreement Pre-Drafted",
+      "Verified Management Corporation (MC) Standing",
+      "Immediate Move-In Verification"
+],
+    proximity: [
+      "Train / Metro Transit Hub",
+      "Beachfront / Walking to Coast",
+      "Shopping Mall & Supermarket (< 5 mins)"
+],
     images: [
       "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=75&auto=format",
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=75&auto=format",
@@ -590,11 +755,26 @@ export const initialProperties: Property[] = [
       zipCode: "00300",
       neighborhood: "Kollupitiya Commercial Zone",
       country: "Sri Lanka",
+      district: "Colombo",
+      town: "Colombo 03 - Kollupitiya",
       coordinates: {
         latitude: 6.9045,
         longitude: 79.8521,
       },
     },
+        deedStatus: "Clear First-Class Title",
+    isVerifiedListing: true,
+    legalChecklist: [
+      "Commercial Building Permit & Certificate of Conformity",
+      "Verified Corporate Lessor Standing",
+      "Stamp Duty & Registration Guidance Included",
+      "RE/MAX Corporate Lease Standard"
+],
+    proximity: [
+      "Train / Metro Transit Hub",
+      "Shopping Mall & Supermarket (< 5 mins)",
+      "Expressway / Highway Interchange"
+],
     images: [
       "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=75&auto=format",
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=75&auto=format",

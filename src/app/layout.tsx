@@ -4,6 +4,7 @@ import "./globals.css";
 import { ComparisonProvider } from "@/context/ComparisonContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { LocalizationProvider } from "@/context/LocalizationContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ComparisonDrawer from "@/components/ComparisonDrawer";
@@ -101,14 +102,16 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-red-100 dark:selection:bg-red-950 selection:text-red-900 dark:selection:text-red-200 transition-colors duration-200">
         <ThemeProvider>
-          <AuthProvider>
-            <ComparisonProvider>
-              <Navbar />
-              <main className="flex-1">{children}</main>
-              <ComparisonDrawer />
-              <Footer />
-            </ComparisonProvider>
-          </AuthProvider>
+          <LocalizationProvider>
+            <AuthProvider>
+              <ComparisonProvider>
+                <Navbar />
+                <main className="flex-1">{children}</main>
+                <ComparisonDrawer />
+                <Footer />
+              </ComparisonProvider>
+            </AuthProvider>
+          </LocalizationProvider>
         </ThemeProvider>
       </body>
     </html>

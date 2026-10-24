@@ -5,9 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Property } from "@/types/property";
 import { useComparison } from "@/context/ComparisonContext";
+import { useLocalization } from "@/context/LocalizationContext";
 import { formatLKR, formatPropertyPrice } from "@/lib/formatters";
 import MortgageCalculator from "@/components/MortgageCalculator";
 import PropertyMap from "@/components/PropertyMap";
+import CurrencySelector from "@/components/CurrencySelector";
+import LandUnitToggle from "@/components/LandUnitToggle";
+import { StickyWhatsAppFab, WhatsAppInquiryButton } from "@/components/WhatsAppButton";
+import { LegalTrustCard, TrustBadgePill } from "@/components/TrustBadges";
 import {
   Bed,
   Bath,
@@ -26,6 +31,12 @@ import {
   Home,
   KeyRound,
   FileText,
+  GraduationCap,
+  HeartPulse,
+  Train,
+  Waves,
+  ShoppingBag,
+  Milestone,
 } from "lucide-react";
 
 interface PropertyDetailViewProps {
@@ -38,6 +49,7 @@ export default function PropertyDetailView({
   similarProperties,
 }: PropertyDetailViewProps) {
   const { isInCompare, toggleCompare, selectedProperties, maxProperties } = useComparison();
+  const { formatPrice, formatLandArea, currency } = useLocalization();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [contactName, setContactName] = useState("");
@@ -49,7 +61,8 @@ export default function PropertyDetailView({
 
   const inCompare = isInCompare(property.id);
 
-  const formattedPrice = formatPropertyPrice(property.price, property.listingType);
+  const formattedPrice = formatPrice(property.price, property.listingType);
+  const landInfo = formatLandArea(property.lotSizePerches, property.squareFeet);
 
   const pricePerSqft =
     property.pricePerSqft || Math.round(property.price / property.squareFeet);
@@ -89,28 +102,42 @@ export default function PropertyDetailView({
             </span>
           </nav>
 
-          {/* Quick Action: Add to Compare */}
-          <button
-            onClick={() => toggleCompare(property)}
-            className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold rounded-xl border transition-all ${
-              inCompare
-                ? "bg-red-50 text-red-700 border-red-300 hover:bg-red-100 shadow-sm"
-                : "bg-white text-slate-700 border-slate-300 hover:border-red-600 hover:text-red-700"
-            }`}
-          >
-            {inCompare ? (
-              <>
-                <Check className="w-3.5 h-3.5 text-red-600 stroke-[3]" />
-                <span>In Comparison ({selectedProperties.length}/{maxProperties})</span>
-              </>
-            ) : (
-              <>
-                <Plus className="w-3.5 h-3.5" />
-                <Scale className="w-3.5 h-3.5 text-blue-700" />
-                <span>Add to Comparison</span>
-              </>
-            )}
-          </button>
+          <div className="flex items-center flex-wrap gap-2.5">
+            {/* Land Measurement Unit Toggle */}
+            <div className="flex items-center gap-1.5">
+              <span className="text-[11px] font-bold text-slate-400 hidden sm:inline">Land Unit:</span>
+              <LandUnitToggle />
+            </div>
+
+            {/* Diaspora Currency Selector */}
+            <div className="flex items-center gap-1.5">
+              <span className="text-[11px] font-bold text-slate-400 hidden sm:inline">Currency:</span>
+              <CurrencySelector />
+            </div>
+
+            {/* Quick Action: Add to Compare */}
+            <button
+              onClick={() => toggleCompare(property)}
+              className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold rounded-xl border transition-all ${
+                inCompare
+                  ? "bg-red-50 text-red-700 border-red-300 hover:bg-red-100 shadow-sm"
+                  : "bg-white text-slate-700 border-slate-300 hover:border-red-600 hover:text-red-700"
+              }`}
+            >
+              {inCompare ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-red-600 stroke-[3]" />
+                  <span>In Comparison ({selectedProperties.length}/{maxProperties})</span>
+                </>
+              ) : (
+                <>
+                  <Plus className="w-3.5 h-3.5" />
+                  <Scale className="w-3.5 h-3.5 text-blue-700" />
+                  <span>Add to Comparison</span>
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -217,6 +244,9 @@ export default function PropertyDetailView({
                         <Sparkles className="w-3 h-3" /> Featured Listing
                       </span>
                     )}
+
+                    {/* Legal Trust Indicator Pill */}
+                    <TrustBadgePill property={property} />
                   </div>
                   <h1 className="text-3xl font-black text-slate-900 tracking-tight">
                     {property.title}
@@ -234,10 +264,15 @@ export default function PropertyDetailView({
                   <div className="text-3xl font-black text-slate-900">
                     {formattedPrice}
                   </div>
+                  {currency !== "LKR" && (
+                    <p className="text-xs font-bold text-slate-400 mt-0.5">
+                      Approx. {formatLKR(property.price)}
+                    </p>
+                  )}
                   {property.listingType === "For Rent" ? (
                     <p className="text-xs font-bold text-emerald-700 mt-0.5">
                       {property.securityDeposit
-                        ? `Security Deposit: ${formatLKR(property.securityDeposit)}`
+                        ? `Security Deposit: ${formatPrice(property.securityDeposit)}`
                         : "Standard 6-Month Lease Deposit"}
                     </p>
                   ) : (
@@ -273,13 +308,64 @@ export default function PropertyDetailView({
                 </div>
                 <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
                   <Calendar className="w-5 h-5 text-blue-700 mx-auto mb-1" />
-                  <span className="text-xs text-slate-500 block">Year Built</span>
+                  <span className="text-xs text-slate-500 block">
+                    {property.lotSizePerches ? "Land Extent" : "Year Built"}
+                  </span>
                   <span className="text-base font-bold text-slate-900">
-                    {property.yearBuilt}
+                    {property.lotSizePerches ? landInfo.formatted : property.yearBuilt}
                   </span>
                 </div>
               </div>
             </div>
+
+            {/* Sri Lanka Legal & Trust Indicators Card */}
+            <LegalTrustCard property={property} />
+
+            {/* Proximity to Essential Infrastructure */}
+            {property.proximity && property.proximity.length > 0 && (
+              <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
+                    <Milestone className="w-5 h-5 text-red-600" />
+                    Essential Infrastructure & Proximity
+                  </h2>
+                  <span className="text-xs font-semibold text-slate-400">
+                    {property.address.city} Enclave
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Ideal strategic location offering convenient access to key transport links, top educational institutes, and medical hubs:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                  {property.proximity.map((prox) => {
+                    const isSchool = prox.toLowerCase().includes("school");
+                    const isHospital = prox.toLowerCase().includes("hospital") || prox.toLowerCase().includes("health");
+                    const isBeach = prox.toLowerCase().includes("beach") || prox.toLowerCase().includes("coast");
+                    const isTransit = prox.toLowerCase().includes("train") || prox.toLowerCase().includes("transit");
+                    const isHighway = prox.toLowerCase().includes("highway") || prox.toLowerCase().includes("expressway");
+
+                    return (
+                      <div
+                        key={prox}
+                        className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-xs font-bold text-slate-800 dark:text-slate-200"
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 flex items-center justify-center shrink-0">
+                          {isSchool && <GraduationCap className="w-4 h-4" />}
+                          {isHospital && <HeartPulse className="w-4 h-4 text-red-600" />}
+                          {isBeach && <Waves className="w-4 h-4 text-cyan-600" />}
+                          {isTransit && <Train className="w-4 h-4 text-emerald-600" />}
+                          {isHighway && <Milestone className="w-4 h-4 text-amber-600" />}
+                          {!isSchool && !isHospital && !isBeach && !isTransit && !isHighway && (
+                            <ShoppingBag className="w-4 h-4 text-blue-600" />
+                          )}
+                        </div>
+                        <span className="leading-snug">{prox}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* Description Narrative */}
             <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
@@ -329,7 +415,7 @@ export default function PropertyDetailView({
                   <span className="text-slate-500 dark:text-slate-400">Land Extent</span>
                   <span className="font-bold text-slate-900 dark:text-white">
                     {property.lotSizePerches
-                      ? `${property.lotSizePerches} Perches (${property.lotSizeSqft?.toLocaleString() || property.squareFeet.toLocaleString()} sqft)`
+                      ? `${landInfo.formatted} (${property.squareFeet.toLocaleString()} sqft living)`
                       : property.lotSizeSqft
                       ? `${property.lotSizeSqft.toLocaleString()} sqft`
                       : "Apartment Unit"}
@@ -482,7 +568,24 @@ export default function PropertyDetailView({
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleContactSubmit} className="space-y-3.5">
+                <div className="space-y-4">
+                  {/* Direct WhatsApp Action - Preferred in Sri Lanka */}
+                  <div className="space-y-2">
+                    <WhatsAppInquiryButton
+                      property={property}
+                      formattedPrice={formattedPrice}
+                      className="w-full"
+                    />
+                    <div className="flex items-center gap-2">
+                      <span className="flex-1 border-t border-slate-100 dark:border-slate-800" />
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                        Or Send Email Inquiry
+                      </span>
+                      <span className="flex-1 border-t border-slate-100 dark:border-slate-800" />
+                    </div>
+                  </div>
+
+                  <form onSubmit={handleContactSubmit} className="space-y-3.5">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 mb-1">
                       Your Full Name
@@ -544,7 +647,8 @@ export default function PropertyDetailView({
                     <span>Request Private Showing</span>
                   </button>
                 </form>
-              )}
+              </div>
+            )}
 
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
                 <span className="flex items-center gap-1 font-semibold text-blue-900">
@@ -596,6 +700,9 @@ export default function PropertyDetailView({
           </div>
         )}
       </div>
+
+      {/* Sticky Click-to-WhatsApp Floating Action Button */}
+      <StickyWhatsAppFab property={property} formattedPrice={formattedPrice} />
     </div>
   );
 }

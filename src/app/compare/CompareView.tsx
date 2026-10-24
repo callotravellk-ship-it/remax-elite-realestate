@@ -6,8 +6,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Property, POPULAR_AMENITIES } from "@/types/property";
 import { useComparison } from "@/context/ComparisonContext";
+import { useLocalization } from "@/context/LocalizationContext";
 import { getProperties } from "@/lib/propertyService";
 import { formatLKR, formatPropertyPrice } from "@/lib/formatters";
+import CurrencySelector from "@/components/CurrencySelector";
+import LandUnitToggle from "@/components/LandUnitToggle";
+import { TrustBadgePill } from "@/components/TrustBadges";
 import {
   Scale,
   X,
@@ -47,6 +51,7 @@ export default function CompareView({
     maxProperties,
     syncFromIds,
   } = useComparison();
+  const { formatPrice, formatLandArea } = useLocalization();
 
   const [allProperties, setAllProperties] = useState<Property[]>(initialProperties);
   const [highlightDifferencesOnly, setHighlightDifferencesOnly] = useState(false);
@@ -222,17 +227,29 @@ export default function CompareView({
         </div>
       </div>
 
-      {/* Control Bar: Filter Differences toggle & Add Property CTA */}
+      {/* Control Bar: Filter Differences toggle, Localization & Add Property CTA */}
       <div className="flex flex-wrap items-center justify-between gap-4 bg-slate-100 p-3.5 rounded-2xl border border-slate-200 mb-6">
-        <label className="flex items-center gap-2.5 cursor-pointer text-xs font-bold text-slate-700">
-          <input
-            type="checkbox"
-            checked={highlightDifferencesOnly}
-            onChange={(e) => setHighlightDifferencesOnly(e.target.checked)}
-            className="w-4 h-4 rounded border-slate-300 text-red-600 focus:ring-red-500"
-          />
-          <span>Highlight differences only</span>
-        </label>
+        <div className="flex flex-wrap items-center gap-4">
+          <label className="flex items-center gap-2.5 cursor-pointer text-xs font-bold text-slate-700">
+            <input
+              type="checkbox"
+              checked={highlightDifferencesOnly}
+              onChange={(e) => setHighlightDifferencesOnly(e.target.checked)}
+              className="w-4 h-4 rounded border-slate-300 text-red-600 focus:ring-red-500"
+            />
+            <span>Highlight differences only</span>
+          </label>
+
+          <div className="flex items-center gap-1.5">
+            <span className="text-[11px] font-bold text-slate-400">Land Unit:</span>
+            <LandUnitToggle />
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            <span className="text-[11px] font-bold text-slate-400">Currency:</span>
+            <CurrencySelector />
+          </div>
+        </div>
 
         {activeProperties.length < maxProperties && (
           <button
@@ -255,7 +272,7 @@ export default function CompareView({
                 Property Overview
               </th>
               {activeProperties.map((property) => {
-                const formattedPrice = formatPropertyPrice(property.price, property.listingType);
+                const formattedPrice = formatPrice(property.price, property.listingType);
 
                 const ppsqft =
                   property.pricePerSqft ||
@@ -314,9 +331,10 @@ export default function CompareView({
                         <h3 className="font-bold text-slate-900 text-sm mt-1 line-clamp-1">
                           {property.title}
                         </h3>
-                        <p className="text-xs text-slate-500 line-clamp-1">
+                        <p className="text-xs text-slate-500 line-clamp-1 mb-1.5">
                           {property.address.city}, {property.address.state}
                         </p>
+                        <TrustBadgePill property={property} />
                       </div>
 
                       {/* Price & Badges */}
@@ -418,7 +436,7 @@ export default function CompareView({
                 </td>
                 {activeProperties.map((p) => (
                   <td key={p.id} className="p-4 font-black text-slate-900 border-l border-slate-200">
-                    <div>{formatPropertyPrice(p.price, p.listingType)}</div>
+                    <div>{formatPrice(p.price, p.listingType)}</div>
                     {p.listingType === "For Rent" && p.securityDeposit ? (
                       <div className="text-[10px] text-emerald-700 font-bold mt-0.5">
                         Deposit: {formatLKR(p.securityDeposit)}
@@ -481,16 +499,19 @@ export default function CompareView({
                 <td className="p-4 font-bold text-slate-700 flex items-center gap-1.5">
                   <Maximize2 className="w-3.5 h-3.5 text-blue-700" /> Square Footage & Land
                 </td>
-                {activeProperties.map((p) => (
-                  <td key={p.id} className="p-4 text-slate-800 font-bold border-l border-slate-200">
-                    {p.squareFeet.toLocaleString()} sqft
-                    {p.lotSizePerches ? (
-                      <span className="block text-[11px] font-normal text-slate-500">
-                        {p.lotSizePerches} Perches Land
-                      </span>
-                    ) : null}
-                  </td>
-                ))}
+                {activeProperties.map((p) => {
+                  const land = formatLandArea(p.lotSizePerches, p.squareFeet);
+                  return (
+                    <td key={p.id} className="p-4 text-slate-800 font-bold border-l border-slate-200">
+                      {p.squareFeet.toLocaleString()} sqft
+                      {p.lotSizePerches ? (
+                        <span className="block text-[11px] font-normal text-slate-500">
+                          {land.formatted}
+                        </span>
+                      ) : null}
+                    </td>
+                  );
+                })}
               </tr>
             )}
 
