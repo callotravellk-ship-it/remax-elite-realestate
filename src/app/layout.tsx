@@ -28,6 +28,15 @@ export const metadata: Metadata = {
   description: DEFAULT_DESCRIPTION,
   keywords: SRI_LANKA_REAL_ESTATE_KEYWORDS,
   authors: [{ name: "RE/MAX ELITE Sri Lanka" }],
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   openGraph: {
     type: "website",
     locale: "en_LK",
